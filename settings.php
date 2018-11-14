@@ -14,8 +14,8 @@
 <div class="wrap">
     <h1>Configurações do WhatsApp Button API</h1>
     <form method="post" action="options.php" enctype="multipart/form-data">
-        <?php settings_fields('settings__wbapi_page'); ?>
-        <?php do_settings_sections('settings__wbapi_page'); ?>
+        <?php settings_fields('settings__wwbtn_page'); ?>
+        <?php do_settings_sections('settings__wwbtn_page'); ?>
         <div class="wpp__view_multi_numbers">
             <table>
                 <tbody></tbody>
