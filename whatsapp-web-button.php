@@ -3,10 +3,13 @@
     
     /*
     * Plugin name: WhatsApp Web Button
+    * Plugin URI: https://github.com/flavisXavier/whatsapp-web-button
     * Description: Adiciona um botão do whatsapp configurável e estilizável para desktop e mobile. Linkado para o WhatsApp Web.
     * Version: 1.1
     * Author: Flaviano Xavier
     * Author URI: https://github.com/flavisXavier
+    * License: GPL2
+    * License URI: https://www.gnu.org/licenses/gpl-2.0.html
     */
     
     define('WWBTN_URL', plugins_url('', __FILE__));
