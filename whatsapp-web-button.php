@@ -3,13 +3,10 @@
     
     /*
     * Plugin name: WhatsApp Web Button
-    * Plugin URI: https://github.com/flavisXavier/whatsapp-web-button
     * Description: Adiciona um botão do whatsapp configurável e estilizável para desktop e mobile. Linkado para o WhatsApp Web.
     * Version: 1.1
     * Author: Flaviano Xavier
     * Author URI: https://github.com/flavisXavier
-    * License: GPL2
-    * License URI: https://www.gnu.org/licenses/gpl-2.0.html
     */
     
     define('WWBTN_URL', plugins_url('', __FILE__));
@@ -21,9 +18,12 @@
         function __construct() {
             add_action('admin_menu', array($this, 'add__wwbtn_options_page'));
             add_action('admin_init', array($this, 'load__scripts_js'));
+            add_action('admin_init', array($this, 'load__back_scripts_css'));
             add_action('admin_init', array($this, 'register__wwbtn_settings'));
             add_action('wp_enqueue_scripts', array($this, 'load__front_scripts_css'));
-            add_action("wp_footer", array($this, 'add__wwbtn_section'));
+            add_action('wp_footer', array($this, 'add__wwbtn_section'));
+            add_action('wp_ajax_save__multi_numbers', array($this, 'save__multi_numbers'));
+            add_action('wp_ajax_nopriv_save__multi_numbers', array($this, 'save__multi_numbers'));
         }
 
         function add__wwbtn_options_page() {
@@ -37,18 +37,24 @@
         function load__scripts_js() {
             wp_deregister_script('jquery');
             wp_enqueue_script('jquery-wwbtn', WWBTN_URL . '/js/jquery-3.3.1-min.js', array(), null, false);
-            wp_enqueue_script('scripts-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('jquery'), null, false);
             wp_enqueue_script('maskedinput-wwbtn', WWBTN_URL . '/js/jquery.maskedinput.js', array('jquery'), null, false);
+            wp_enqueue_script('scripts-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('jquery'), null, false);
+            wp_localize_script('scripts-wwbtn-page', 'wwbtn_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
         function load__front_scripts_css() {
             wp_enqueue_style('wwbtn-css-icones', WWBTN_URL . '/css/wwbtn.style.css', array(), null, false);
-            wp_enqueue_style('wwbtn-css-icones');
+        }
+
+        function load__back_scripts_css() {
+            wp_enqueue_style('wwbtn-css-style', WWBTN_URL . '/css/wwbtn.back-style.css', array(), null, false);
+            wp_enqueue_style('wwbtn-css-fonts', WWBTN_URL . '/css/font-awesome/css/font-awesome.min.css', array(), null, false);
         }
 
         function register__wwbtn_settings() {
             register_setting('settings__wwbtn_page', 'wpp__active');
             register_setting('settings__wwbtn_page', 'wpp__telefone');
+            register_setting('settings__wwbtn_page', 'wpp__multi_tele');
             register_setting('settings__wwbtn_page', 'wpp__img');
             register_setting("settings__wwbtn_page", "wpp__file", "handle_file_upload");
             register_setting("settings__wwbtn_page", "wpp__style");
@@ -65,6 +71,27 @@
                 return $temp;
             }
             return $option;
+        }
+
+        function save__multi_numbers() {
+            $multi_numbers = $_POST["data"];
+            if (get_option('opt__multi_numbers')) {
+                $old_options = get_option('opt__multi_numbers');
+                foreach ($old_options as $old_key) {
+                    foreach ($multi_numbers as $key) {
+                        if ($old_key[0] == $key[0]) {
+                            echo "<div class='notice notice-error'><p>O nome definido já está vinculado a outro telefone, tente outro nome.</p></div>";
+                        } else {
+                            echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
+                            $old_options[count($old_options)] = array($key[0], $key[1]);
+                            update_option('opt__multi_numbers', $old_options);
+                        }
+                    }     
+                }
+            } else {
+                update_option('opt__multi_numbers', $multi_numbers);
+            }
+            wp_die();
         }
 
         function add__wwbtn_section() {

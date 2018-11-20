@@ -16,6 +16,7 @@
     <form method="post" action="options.php" enctype="multipart/form-data">
         <?php settings_fields('settings__wwbtn_page'); ?>
         <?php do_settings_sections('settings__wwbtn_page'); ?>
+        <div id="wwbtn__notices"></div>
         <div class="wpp__view_multi_numbers">
             <table>
                 <tbody></tbody>
@@ -116,8 +117,65 @@
                         <p class="description">As opções relacionadas ao <strong>tooltip</strong> depende da utilização do <strong>Bootstrap</strong> ou qualquer framework que o utilize de forma semelhante.</p>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">Múltiplos Números</th>
+                    <td>
+                        <fieldset>
+                            <label>
+                                <input type="radio" name="wpp__multi_act" id="wpp__multi_active" value="active" <?php checked(get_option('wpp__multi_act'), 'active'); ?>>
+                                <span>Ativado</span>
+                            </label>
+                            <br/>
+                            <label>
+                                <input type="radio" name="wpp__multi_act" id="wpp__multi_desativ" value="desativ" <?php checked(get_option('wpp__multi_act'), 'desativ'); ?>>
+                                <span>Desativado</span>
+                            </label>
+                        </fieldset>
+                        <p class="description">A opção surtirá efeito abaixo <strong>apenas ao salvar</strong> as alterações, atenção.</p>
+                    </td>
+                </tr>
+                <tr class="wpp__multi_tel">
+                    <th scope="row">
+                        <label for="id__multi_label">Texto da Opção</label>
+                    </th>
+                    <td>
+                        <input type="text" name="wpp__multi_label_add" id="id__multi_label" class="regular-text">
+                    </td>
+                </tr>
+                <tr class="wpp__multi_tel">
+                    <th scope="row">
+                        <label for="id__multi_number">Número</label>
+                    </th>
+                    <td>
+                        <input type="text" name="wpp__multi_tele_add" id="id__multi_number" class="regular-text"> 
+                    </td>
+                </tr>
             </tbody>
-        </table> 
+        </table>
+        <div id="table" class="table-editable">
+            <table class="form-table">
+                <tr>
+                    <th>Nome</th>
+                    <th>Número</th>
+                    <th></th>
+                </tr>
+                <?php
+                    $multi_numbers = get_option("opt__multi_numbers");
+                    foreach ($multi_numbers as $key) {
+                        echo "<tr>";
+                        echo "<td>" . $key[0] . "</td>";
+                        echo "<td>" . $key[1] . "</td>";
+                        echo '<td><span class="table-remove"><i class="fa fa-trash" aria-hidden="true"></i></span></td>';
+                        echo "</tr>";
+                    }
+                ?>
+            </table>
+        </div>
+        <div class="wwbtn__submit">
+            <p class="submit multi__n">
+                <a href="#!" id="add__multi_btn" class="button button-secondary">Adicionar Telefone</a>
+            </p>
         <?php submit_button(); ?>
+        </div>
     </form>
 </div>
