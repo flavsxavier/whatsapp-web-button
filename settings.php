@@ -1,16 +1,4 @@
 <?php defined('ABSPATH') or die("Sem scripts kids, por favor."); ?>
-<script>
-    $(function() {
-        $('#id__tel').mask('(99) 9999-9999');
-    });
-</script>
-<style>
-    .wpp__view_multi_numbers {
-        position: absolute;
-        display: block;
-        right: 220px;
-    }
-</style>
 <div class="wrap">
     <h1>Configurações do WhatsApp Web Button</h1>
     <form method="post" action="options.php" enctype="multipart/form-data">
@@ -134,43 +122,47 @@
                         <p class="description">A opção surtirá efeito abaixo <strong>apenas ao salvar</strong> as alterações, atenção.</p>
                     </td>
                 </tr>
-                <tr class="wpp__multi_tel">
+                <tr class="wpp__multi_tel hidden">
                     <th scope="row">
                         <label for="id__multi_label">Texto da Opção</label>
                     </th>
                     <td>
-                        <input type="text" name="wpp__multi_label_add" id="id__multi_label" class="regular-text">
+                        <input type="text" name="wpp__multi_label_add" id="id__multi_label" class="regular-text" disabled>
                     </td>
                 </tr>
-                <tr class="wpp__multi_tel">
+                <tr class="wpp__multi_tel hidden">
                     <th scope="row">
                         <label for="id__multi_number">Número</label>
                     </th>
                     <td>
-                        <input type="text" name="wpp__multi_tele_add" id="id__multi_number" class="regular-text"> 
+                        <input type="text" name="wpp__multi_tele_add" id="id__multi_number" class="regular-text" disabled> 
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div id="table" class="table-editable">
-            <table class="form-table">
-                <tr>
-                    <th>Nome</th>
-                    <th>Número</th>
-                    <th></th>
-                </tr>
-                <?php
-                    $multi_numbers = get_option("opt__multi_numbers");
-                    foreach ($multi_numbers as $key) {
-                        echo "<tr>";
-                        echo "<td>" . $key[0] . "</td>";
-                        echo "<td>" . $key[1] . "</td>";
-                        echo '<td><span class="table-remove"><i class="fa fa-trash" aria-hidden="true"></i></span></td>';
-                        echo "</tr>";
-                    }
-                ?>
+        <?php if (get_option('opt__multi_numbers')) : ?>
+        <div class="wwbtn__table">
+            <table id="table__multi_tel" class="display">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Número</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $multi_numbers = get_option("opt__multi_numbers");
+                        foreach ($multi_numbers as $key) {
+                            echo "<tr>";
+                            echo "<td>" . $key[0] . "</td>";
+                            echo "<td>" . $key[1] . "</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </tbody>
             </table>
         </div>
+        <?php endif; ?>
         <div class="wwbtn__submit">
             <p class="submit multi__n">
                 <a href="#!" id="add__multi_btn" class="button button-secondary">Adicionar Telefone</a>

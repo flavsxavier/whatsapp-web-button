@@ -35,11 +35,11 @@
         }
 
         function load__scripts_js() {
-            wp_deregister_script('jquery');
-            wp_enqueue_script('jquery-wwbtn', WWBTN_URL . '/js/jquery-3.3.1-min.js', array(), null, false);
-            wp_enqueue_script('maskedinput-wwbtn', WWBTN_URL . '/js/jquery.maskedinput.js', array('jquery'), null, false);
-            wp_enqueue_script('scripts-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('jquery'), null, false);
-            wp_localize_script('scripts-wwbtn-page', 'wwbtn_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+            wp_enqueue_script('script-jquery-wwbtn', WWBTN_URL . '/js/jquery-3.3.1-min.js', array(), null, false);
+            wp_enqueue_script('script-maskedinput-wwbtn', WWBTN_URL . '/js/jquery.maskedinput.js', array('script-jquery-wwbtn'), null, false);
+            wp_enqueue_script('script-wwbtn-datatables', WWBTN_URL . '/assets/datatables/datatables.min.js', array('script-jquery-wwbtn'), null, false);
+            wp_enqueue_script('script-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('script-jquery-wwbtn'), null, false);
+            wp_localize_script('script-wwbtn-page', 'wwbtn_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
         function load__front_scripts_css() {
@@ -49,6 +49,7 @@
         function load__back_scripts_css() {
             wp_enqueue_style('wwbtn-css-style', WWBTN_URL . '/css/wwbtn.back-style.css', array(), null, false);
             wp_enqueue_style('wwbtn-css-fonts', WWBTN_URL . '/css/font-awesome/css/font-awesome.min.css', array(), null, false);
+            wp_enqueue_style('wwbtn-css-datatables', WWBTN_URL . '/assets/datatables/datatables.min.css', array(), null, false);
         }
 
         function register__wwbtn_settings() {
@@ -62,6 +63,15 @@
             register_setting("settings__wwbtn_page", "wpp__tooltip");
             register_setting("settings__wwbtn_page", "wpp__tooltip_pos");
             register_setting("settings__wwbtn_page", "wpp__multi_act");
+        }
+
+        public function unmask__wwbtn_tel($numero) {
+            $tel = array();
+            $tel[0] = substr_replace($numero, "", 0, 1);
+            $tel[1] = substr_replace($tel[0], "", 2, 1);
+            $tel[2] = substr_replace($tel[1], "", 2, 1);
+            $tel[3] = substr_replace($tel[2], "", 6, 1);
+            return $tel[3];
         }
 
         function handle_file_upload($option) {
@@ -94,18 +104,10 @@
             wp_die();
         }
 
-        function add__wwbtn_section() {
-            function unmask__wwbtn_tel($numero) {
-                $tel = array();
-                $tel[0] = substr_replace($numero, "", 0, 1);
-                $tel[1] = substr_replace($tel[0], "", 2, 1);
-                $tel[2] = substr_replace($tel[1], "", 2, 1);
-                $tel[3] = substr_replace($tel[2], "", 6, 1);
-                return $tel[3];
-            }
+        public function add__wwbtn_section() {
             if (get_option('wpp__active') === 'active') :
                 $html = "";
-                $telefone = unmask__wwbtn_tel(get_option('wpp__telefone'));
+                $telefone = $this->unmask__wwbtn_tel(get_option('wpp__telefone'));
                 if ((get_option('wpp__tooltip')) && !(get_option('wpp__tooltip_pos') == 'none')) :
                     $tooltip = "data-toggle='tooltip' data-placement='". get_option('wpp__tooltip_pos') ."' title='". get_option('wpp__tooltip') ."'";
                 endif;

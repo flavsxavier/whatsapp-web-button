@@ -5,20 +5,7 @@
     .wwbtn__submit .multi__n {
         padding-right: 35px;
     }
-.table-editable {
-    position: relative;
-    margin-top: 30px;
+.wwbtn__table {
+    width: 800px;
+    margin-top: 60px;
 }
-.table-editable table {
-    width: 100%;
-}
-    .table-remove {
-        color: #700;
-        cursor: pointer;
-    }
-    .table-remove:hover {
-        color: #f00;
-    }
-    .table-remove i {
-        font-size: 20px;
-    }

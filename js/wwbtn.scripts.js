@@ -1,4 +1,12 @@
 $(function() {
+    $('#table__multi_tel').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf'
+        ]
+    });
+    $('#id__tel').mask('(99) 9999-9999');
+    $('#id__multi_number').mask('(99) 9999-9999');
     // Opções Ícones
     var select = "#wpp__modes";
     if ($(select).val() == "wpp__custom") {
@@ -38,7 +46,6 @@ $(function() {
         $(".wpp__multi_tel td input").attr("disabled", "");
     }
     $("#add__multi_btn").click(function() {
-        var labelExist = false;
         var label = $("#id__multi_label").val();
         var number = $("#id__multi_number").val();
         multi_numbers.forEach(verLabelExist);
@@ -47,20 +54,24 @@ $(function() {
                 labelExist = true;
             }
         }
-        if (labelExist == false) {
-            $("#wwbtn__notices").html("");
+        if (typeof labelExist == 'undefined' || labelExist == false) {
             multi_numbers[multi_numbers.length] = [label, number];
-        } else if (labelExist == true) {
+            $("#wwbtn__notices").html("");
+        } else if (typeof labelExist !== 'undefined' && labelExist == true) {
             $("#wwbtn__notices").html("<div class='notice notice-error'><p>O nome definido já está vinculado a outro telefone, tente outro nome.</p></div>");
             $('html, body').animate({scrollTop: 0}, 400);
+            registerNumberFalse = false;
         }
+        $("#id__multi_label").val("");
+        $("#id__multi_number").val("");
     });
     $("#submit").click(function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         $.post(wwbtn_ajax_object.ajax_url, {
             'action': 'save__multi_numbers',
             'data': multi_numbers
         }, function(response) {
+            alert(response)
             $("#wwbtn__notices").html(response);
             $('html, body').animate({scrollTop: 0}, 400);
         });
