@@ -66,7 +66,7 @@ $(function() {
         $("#id__multi_number").val("");
     });
     $("#submit").click(function(e) {
-        e.preventDefault();
+        // e.preventDefault();
         $.post(wwbtn_ajax_object.ajax_url, {
             'action': 'save__multi_numbers',
             'data': multi_numbers
