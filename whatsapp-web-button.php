@@ -35,10 +35,10 @@
         }
 
         function load__scripts_js() {
-            wp_enqueue_script('script-jquery-wwbtn', WWBTN_URL . '/js/jquery-3.3.1-min.js', array(), null, false);
-            wp_enqueue_script('script-maskedinput-wwbtn', WWBTN_URL . '/js/jquery.maskedinput.js', array('script-jquery-wwbtn'), null, false);
-            wp_enqueue_script('script-wwbtn-datatables', WWBTN_URL . '/assets/datatables/datatables.min.js', array('script-jquery-wwbtn'), null, false);
-            wp_enqueue_script('script-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('script-jquery-wwbtn'), null, false);
+            wp_enqueue_script('jquery');
+            wp_enqueue_script('script-maskedinput-wwbtn', WWBTN_URL . '/js/jquery.maskedinput.js', array('jquery'), null, false);
+            wp_enqueue_script('script-wwbtn-datatables', WWBTN_URL . '/assets/datatables/datatables.min.js', array('jquery'), null, false);
+            wp_enqueue_script('script-wwbtn-page', WWBTN_URL . '/js/wwbtn.scripts.js', array('jquery'), null, false);
             wp_localize_script('script-wwbtn-page', 'wwbtn_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
@@ -91,10 +91,14 @@
                     foreach ($multi_numbers as $key) {
                         if ($old_key[0] == $key[0]) {
                             echo "<div class='notice notice-error'><p>O nome definido já está vinculado a outro telefone, tente outro nome.</p></div>";
+                            echo $old_key[0] . $key[0];
+                            wp_die();
                         } else {
+                            print_r($old_key);
                             echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
                             $old_options[count($old_options)] = array($key[0], $key[1]);
-                            update_option('opt__multi_numbers', $old_options);
+                            // update_option('opt__multi_numbers', $old_options);
+                            wp_die();
                         }
                     }     
                 }

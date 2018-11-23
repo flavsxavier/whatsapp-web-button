@@ -1,4 +1,4 @@
-$(function() {
+jQuery(document).ready(function($) {
     $('#table__multi_tel').DataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -71,7 +71,7 @@ $(function() {
             'action': 'save__multi_numbers',
             'data': multi_numbers
         }, function(response) {
-            alert(response)
+            // alert(response)
             $("#wwbtn__notices").html(response);
             $('html, body').animate({scrollTop: 0}, 400);
         });
