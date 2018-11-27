@@ -1,11 +1,16 @@
-.wwbtn__submit {
-    display: inline-flex;
-    margin-top: 20px;
-}
-    .wwbtn__submit .multi__n {
-        padding-right: 35px;
-    }
 .wwbtn__table {
     width: 800px;
     margin-top: 60px;
+}
+.wwbtn__table td a {
+    margin: 0 auto;
+    display: table;
+    cursor: pointer;
+    color: #000;
+}
+.wwbtn__table td a#delete__number:hover {
+    color: #b70d0d;
+}
+.wwbtn__table td a i {
+    font-size: 20px;
 }

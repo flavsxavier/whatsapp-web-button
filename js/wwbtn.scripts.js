@@ -65,13 +65,22 @@ jQuery(document).ready(function($) {
         $("#id__multi_label").val("");
         $("#id__multi_number").val("");
     });
+    $(".delete__number").click(function() {
+        label_del = $(this).attr("data-number");
+        $.post(wwbtn_ajax_object.ajax_url, {
+            'action': 'delete__number',
+            'data': label_del
+        }, function(response) {
+            $("#wwbtn__notices").html(response);
+            $('html, body').animate({scrollTop: 0}, 400);
+            location.reload();
+        });
+    });
     $("#submit").click(function(e) {
-        // e.preventDefault();
         $.post(wwbtn_ajax_object.ajax_url, {
             'action': 'save__multi_numbers',
             'data': multi_numbers
         }, function(response) {
-            // alert(response)
             $("#wwbtn__notices").html(response);
             $('html, body').animate({scrollTop: 0}, 400);
         });

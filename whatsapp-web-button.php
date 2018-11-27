@@ -24,6 +24,8 @@
             add_action('wp_footer', array($this, 'add__wwbtn_section'));
             add_action('wp_ajax_save__multi_numbers', array($this, 'save__multi_numbers'));
             add_action('wp_ajax_nopriv_save__multi_numbers', array($this, 'save__multi_numbers'));
+            add_action('wp_ajax_delete__number', array($this, 'delete__number'));
+            add_action('wp_ajax_nopriv_delete__number', array($this, 'delete__number'));
         }
 
         function add__wwbtn_options_page() {
@@ -86,36 +88,51 @@
         function save__multi_numbers() {
             $multi_numbers = $_POST["data"];
             if (get_option('opt__multi_numbers')) {
+                $labelInval = false;
                 $old_options = get_option('opt__multi_numbers');
-                foreach ($old_options as $old_key) {
+                for ($i = 0; $i < count(get_option('opt__multi_numbers')); $i++) {
+                    if ($multi_numbers[$i][0] == $old_options[$i][0]) {
+                        $labelInval = true;
+                    }
+                }
+                if ($labelInval == true) {
+                    echo "<div class='notice notice-error'><p>O nome definido já está vinculado a outro telefone, tente outro nome.</p></div>";
+                } else {
                     foreach ($multi_numbers as $key) {
-                        if ($old_key[0] == $key[0]) {
-                            echo "<div class='notice notice-error'><p>O nome definido já está vinculado a outro telefone, tente outro nome.</p></div>";
-                            echo $old_key[0] . $key[0];
-                            wp_die();
-                        } else {
-                            print_r($old_key);
-                            echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
-                            $old_options[count($old_options)] = array($key[0], $key[1]);
-                            // update_option('opt__multi_numbers', $old_options);
-                            wp_die();
-                        }
-                    }     
+                        echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
+                        $old_options[count($old_options)] = array($key[0], $key[1]);
+                        update_option('opt__multi_numbers', $old_options);
+                    }
                 }
             } else {
+                echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
                 update_option('opt__multi_numbers', $multi_numbers);
             }
             wp_die();
         }
 
+        function delete__number() {
+            $del_number = $_POST["data"];
+            $numbers = get_option('opt__multi_numbers');
+            for ($i = 0; $i < count(get_option('opt__multi_numbers')); $i++) {
+                if ($del_number == $numbers[$i][0]) {
+                    unset($numbers[$i]);
+                    $numbers = array_values($numbers);
+                    echo "<div class='notice notice-success'><p>Opções alteradas com sucesso.</p></div>";
+                    update_option('opt__multi_numbers', $numbers);
+                }
+            }
+            wp_die();
+        }
+
         public function add__wwbtn_section() {
-            if (get_option('wpp__active') === 'active') :
+            if (get_option('wpp__active') === 'active' && get_option('wpp__multi_act') === 'deactivated') :
                 $html = "";
                 $telefone = $this->unmask__wwbtn_tel(get_option('wpp__telefone'));
                 if ((get_option('wpp__tooltip')) && !(get_option('wpp__tooltip_pos') == 'none')) :
                     $tooltip = "data-toggle='tooltip' data-placement='". get_option('wpp__tooltip_pos') ."' title='". get_option('wpp__tooltip') ."'";
                 endif;
-                if (!(get_option('wpp__style') == 'none')) :
+                if ((get_option('wpp__style') !== 'none')) :
                     $html .= "<a href='https://web.whatsapp.com/send?phone=+55$telefone' target='_blank' class='d-none d-md-block'>";
                     if ($wpp__icon = get_option('wpp__file')) :
                         $html .= "<span class='wpp__section desktop ". get_option('wpp__style') ."'><img src='$wpp__icon' $tooltip alt=''></span>";
@@ -126,7 +143,7 @@
                     endif;
                     $html .= "</a>";
                 endif;
-                if (!(get_option('wpp__style_mb') == 'none')) :
+                if ((get_option('wpp__style_mb') !== 'none')) :
                     $html .= "<a href='https://web.whatsapp.com/send?phone=+55$telefone' target='_blank' class='d-md-none'>";
                     if ($wpp__icon = get_option('wpp__file')) :
                         $html .= "<span class='wpp__section mobile ". get_option('wpp__style_mb') ."'><img src='$wpp__icon' $tooltip alt=''></span>";
@@ -135,6 +152,21 @@
                         else: 
                             $html .= "<span class='wpp__section mobile ". get_option('wpp__style_mb') ."'><img src='". WWBTN_URL . "/images/whatsapp/wpp__business.png" ."' $tooltip alt=''></span>";
                         endif;
+                    $html .= "</a>";
+                endif;
+            elseif (get_option('wpp__active') === 'active' && get_option('wpp__multi_act') === 'active') :
+                $html = "";
+                if ((get_option('wpp__tooltip')) && !(get_option('wpp__tooltip_pos') == 'none')) :
+                    $tooltip = "data-toggle='tooltip' data-placement='". get_option('wpp__tooltip_pos') ."' title='". get_option('wpp__tooltip') ."'";
+                endif;
+                if ((get_option('wpp__style') !== 'none')) :
+                    if ($wpp__icon = get_option('wpp__file')) :
+                        $html .= "<span class='wpp__section multi__n desktop ". get_option('wpp__style') ."'><img src='$wpp__icon' $tooltip alt=''></span>";
+                    elseif (get_option('wpp__img') == 'wpp__padrao') :
+                        $html .= "<span class='wpp__section multi__n fab desktop ". get_option('wpp__style') ."' $tooltip><i class='fa fa-whatsapp' aria-hidden='true'></i></span>";
+                    else: 
+                        $html .= "<span class='wpp__section multi__n desktop ". get_option('wpp__style') ."'><img src='". WWBTN_URL . "/images/whatsapp/wpp__businesst.png" ."' $tooltip alt=''></span>";
+                    endif;
                     $html .= "</a>";
                 endif;
             endif;

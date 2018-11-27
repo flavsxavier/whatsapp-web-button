@@ -1,3 +1,15 @@
+/* Geral */
+.wpp__section {
+    position: fixed;
+    padding-top: 5px;
+    bottom: 20px;
+    z-index: 99;
+    cursor: pointer;
+}
+.wpp__section.multi__n {
+    border-radius: 0 !important; 
+    border: 1px solid #ddd;
+}
 /* Ícones com FAB */
 .wpp__section.fab {
     width: 60px;
@@ -7,14 +19,8 @@
     font-size: 35px !important;
     color: white;
     text-align: center !important;
-    position: fixed;
-    padding-top: 5px;
     bottom: 50px;
-    z-index: 99;
 }  
-.wpp__section.fab:hover {
-    cursor: pointer;
-}
 /* Ícone: Desktop - Esquerda - Direita / Mobile - Esquerda - Direita */
 .wpp__section.fab.desktop.left, .wpp__section.fab.mobile.left {
     left: 30px;
@@ -60,49 +66,41 @@
 }
 
 /* Ícones sem FAB */
-.wpp__section img {
-    width: auto;
-    height: auto;
-    text-align: center !important;
-    position: fixed;
-    padding-top: 5px;
-    bottom: 20px;
-    z-index: 99;
-    margin: 5px auto;
-}
-.wpp__section img:hover {
-    cursor: pointer;
-}
 /* Ícone: Desktop - Esquerda - Direita / Mobile - Esquerda - Direita */
-.wpp__section.desktop.left img, .wpp__section.mobile.left img {
+.wpp__section.desktop.left, .wpp__section.mobile.left {
     left: 30px;
 }
-.wpp__section.desktop.right img, .wpp__section.mobile.right img {
+.wpp__section.desktop.right, .wpp__section.mobile.right {
     right: 30px;
 }
 /* Ícone: Mobile - Topo - Esquerda / Topo - Direita */
-.wpp__section.mobile.top.left img {
+.wpp__section.mobile.top.left {
     top: 70px;
     left: 30px;
 }
-.wpp__section.mobile.top.right img {
+.wpp__section.mobile.top.right {
     top: 70px;
     right: 30px;
 }
-@media screen and (max-width: 767px) { 
     .wpp__section img {
+        text-align: center !important;
+        margin: 5px auto;
+    }
+
+@media screen and (max-width: 767px) { 
+    .wpp__section {
         padding-top: 2px;
-        bottom: 30px;
+        bottom: 10px;
     } 
 } 
 @media screen and (min-width: 768px) and (max-width: 992px) { 
-    .wpp__section img {
+    .wpp__section {
         padding-top: 2px;
         bottom: 20px;
     }
 }
 @media screen and (min-width: 993px) { 
-    .wpp__section img {
+    .wpp__section {
         padding-top: 5px;
         bottom: 30px;
     }

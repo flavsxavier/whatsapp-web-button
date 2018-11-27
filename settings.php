@@ -22,7 +22,7 @@
                             </label>
                             <br/>
                             <label>
-                                <input type="radio" name="wpp__active" id="wpp__active_desactiv" value="desactive" <?php checked(get_option('wpp__active'), 'desactive') ?> required>
+                                <input type="radio" name="wpp__active" id="wpp__active_desactiv" value="deactivated" <?php checked(get_option('wpp__active'), 'deactivated') ?> required>
                                 <span>Desativado</span>
                             </label>
                         </fieldset>
@@ -115,7 +115,7 @@
                             </label>
                             <br/>
                             <label>
-                                <input type="radio" name="wpp__multi_act" id="wpp__multi_desativ" value="desativ" <?php checked(get_option('wpp__multi_act'), 'desativ'); ?>>
+                                <input type="radio" name="wpp__multi_act" id="wpp__multi_desativ" value="deactivated" <?php checked(get_option('wpp__multi_act'), 'deactivated'); ?>>
                                 <span>Desativado</span>
                             </label>
                         </fieldset>
@@ -140,6 +140,11 @@
                 </tr>
             </tbody>
         </table>
+        <div class="wwbtn__submit">
+            <p class="submit multi__n">
+                <a id="add__multi_btn" class="button button-secondary">Adicionar telefone</a>
+            </p>
+        </div>
         <?php if (get_option('opt__multi_numbers')) : ?>
         <div class="wwbtn__table">
             <table id="table__multi_tel" class="display">
@@ -147,6 +152,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Número</th>
+                        <th>Opção</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,6 +162,7 @@
                             echo "<tr>";
                             echo "<td>" . $key[0] . "</td>";
                             echo "<td>" . $key[1] . "</td>";
+                            echo "<td><a data-number='". $key[0] ."' class='delete__number'><span class='center'><i class='fa fa-trash'></i></span></a></td>";
                             echo "</tr>";
                         }
                     ?>
@@ -163,11 +170,6 @@
             </table>
         </div>
         <?php endif; ?>
-        <div class="wwbtn__submit">
-            <p class="submit multi__n">
-                <a href="#!" id="add__multi_btn" class="button button-secondary">Adicionar Telefone</a>
-            </p>
         <?php submit_button(); ?>
-        </div>
     </form>
 </div>
