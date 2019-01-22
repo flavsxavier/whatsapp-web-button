@@ -1,0 +1,14 @@
+// Table
+#wwbtn__table {
+    width: 800px;
+    margin-top: 60px;
+    td a {
+        margin: 0 auto;
+        display: table;
+        cursor: pointer;
+        color: $black;
+        &#delete__number:hover {
+            color: $bgcolor-delete;
+        }
+    }
+}
