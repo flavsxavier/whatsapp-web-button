@@ -27,7 +27,14 @@ Created by [me](https://github.com/flavisXavier), with the contribution of techn
 
 ## Changelog
 
-Read the [changelog](https://github.com/flavisXavier/whatsapp-web-button/blob/master/changelog.txt).
+WhatsApp Web Button - v2.0
+
+- jQuery added
+- Bootstrap and its necessary dependencies for it added
+- Fonts Awesome removed
+- Múltiplos Números fixed
+- core optimized and files reorganized
+- another bugs fixeds
 
 ## License
 
