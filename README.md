@@ -31,4 +31,4 @@ Read the [changelog](https://github.com/flavisXavier/whatsapp-web-button/blob/ma
 
 ## License
 
-[GNU v2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.pt-br.html)
+[GNU v2.0/GPL2](https://www.gnu.org/licenses/gpl-2.0.html)
