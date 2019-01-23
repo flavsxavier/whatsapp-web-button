@@ -1,0 +1,34 @@
+# WhatsApp Web Button
+
+WhatsApp Web Button is a WordPress Plugin for add e configure one or more numbers.
+
+## Installation
+
+Enter the dist folder and copy the whatsapp-web-button folder, then zip and install in WordPress or paste into the plugins folder directly.
+
+
+## Usage
+
+Just install and configure as you prefer.
+
+## Important
+
+The plugin use Datatables, the JavaScript dependencies of Bootstrap (jQuery and Popper.js) and some of his components: input group, modal, tooltip, utilities.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## Authors and acknowledgment
+
+Created by [me](https://github.com/flavisXavier), with the contribution of technologies: Bootstrap, jQuery, Popper.js, Datatables through Gulp, SASS and much coffee. Thanks!
+
+## Changelog
+
+Read the [changelog](https://github.com/flavisXavier/whatsapp-web-button/blob/master/changelog.txt).
+
+## License
+
+[GNU v2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.pt-br.html)
