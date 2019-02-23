@@ -27,6 +27,13 @@ Created by [me](https://github.com/flavisXavier), with the contribution of techn
 
 ## Changelog
 
+WhatsApp Web Button - v2.0.1 [Emergencial Update]
+
+- Security vulnerability fixed
+- Bootstrap updated to 4.3.1
+- Popper.js updated to 1.14.7
+- babel/core and devDependencies updated
+
 WhatsApp Web Button - v2.0
 
 - jQuery added
