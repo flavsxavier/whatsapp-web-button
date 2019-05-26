@@ -34,7 +34,6 @@ WhatsApp Web Button - v2.1.0 [Important Update]
 - no more unnecessary files being upload to the website and dashboard
 - dev dependencies updated
 - improvements in code and more things
-- tested 100% in WordPress 5.2.0
 
 WhatsApp Web Button - v2.0.1 [Emergencial Update]
 
