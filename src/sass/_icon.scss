@@ -5,32 +5,41 @@
     bottom: 20px;
     z-index: 99;
     cursor: pointer;
-    &.desktop.left, &.mobile.left {
-        left: $lr_position;
+    &.desktop, &.mobile {
+        &.left {
+            left: $lr_position;
+        }
+        &.right {
+            right: $lr_position; 
+        }
     }
-    &.desktop.right, &.mobile.right {
-        right: $lr_position;
-    }
-    &.mobile.top {
-        top: $top_position;
+    &.mobile {
+        display: none;
+        &.top {
+            top: $top_position;
+        }
     }
     img {
         text-align: center !important;
         margin: 5px auto;
     }
-    @media screen {
-        @media (max-width: 767px) {
-            padding-top: 2px;
-            right: 20px;
-            bottom: 0px;
+    @media screen and (max-width: 767) {
+        padding-top: 2px;
+        right: 20px;
+        bottom: 0px;
+        &.desktop {
+            display: none;
         }
-        @media (min-width: 768px) and (max-width: 992px) {
-            padding-top: 2px;
-            bottom: 10px;
+        &.mobile {
+            display: block;
         }
-        @media (min-width: 993px) {
-            padding-top: 5px;
-            bottom: 20px;
-        }
+    }
+    @media screen and (min-width: 768px) and (max-width: 992px) {
+        padding-top: 2px;
+        bottom: 10px;
+    }
+    @media screen and (min-width: 993px) {
+        padding-top: 5px;
+        bottom: 20px;
     }
 }

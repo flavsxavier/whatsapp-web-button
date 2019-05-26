@@ -1,0 +1,58 @@
+// General
+.wrap {
+    .dashicons {
+        font-size: 30px;
+        width: auto;
+        height: auto;
+    }
+    #wwb__notices p .dashicons {
+        font-size: 22px;
+    }
+    .form-table {
+        h2 {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            .dashicons {
+                margin-right: 3px;
+                font-size: 20px;
+            }
+        }
+        .icon-preview {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        .mnumbers-preview {
+            padding-top: 5px;
+        }
+    }
+}
+
+// Numbers Table
+#wwbtn__table {
+    width: 800px;
+    margin-top: 60px;
+    h2 {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        .dashicons {
+            margin-right: 3px;
+            font-size: 20px;
+        }
+    }
+    td a {
+        margin: 0 auto;
+        display: table;
+        cursor: pointer;
+        color: $black;
+        &.delete__number {
+            span.dashicons {
+                font-size: 20px;
+            }
+            &:hover {
+                color: $bgcolor-delete;
+            }
+        }
+    }
+}

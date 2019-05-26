@@ -6,10 +6,9 @@ WhatsApp Web Button is a WordPress Plugin for add e configure one or more number
 
 Enter the dist folder and copy the whatsapp-web-button folder, then zip and install in WordPress or paste into the plugins folder directly.
 
-
 ## Usage
 
-Just install and configure as you prefer.
+Just install and configure as you prefer. Complatible with WordPress 5.2.1 and earlier.
 
 ## Important
 
@@ -27,19 +26,29 @@ Created by [me](https://github.com/flavisXavier), with the contribution of techn
 
 ## Changelog
 
+WhatsApp Web Button - v2.1.0 [Important Update]
+- security vulnerability fixed
+- new layout based on WordPress AdminUI
+- new way to send a custom icon using WordPress native media library
+- improvements in Multiple Numbers
+- no more unnecessary files being upload to the website and dashboard
+- dev dependencies updated
+- improvements in code and more things
+- tested 100% in WordPress 5.2.0
+
 WhatsApp Web Button - v2.0.1 [Emergencial Update]
 
-- Security vulnerability fixed
+- security vulnerability fixed
 - Bootstrap updated to 4.3.1
 - Popper.js updated to 1.14.7
-- babel/core and devDependencies updated
+- babel/core and dev dependencies updated
 
 WhatsApp Web Button - v2.0
 
 - jQuery added
 - Bootstrap and its necessary dependencies for it added
 - Fonts Awesome removed
-- Múltiplos Números fixed
+- Multiple Numbers fixed
 - core optimized and files reorganized
 - another bugs fixeds
 
