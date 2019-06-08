@@ -1,0 +1,22 @@
+.wwb__btn {
+    margin: 0 5px;
+    padding: 5px 10px;
+    color: #fff !important;
+    font-size: 17px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: all .4s;
+    cursor: pointer;
+    &.wwb__primary {
+        background-color: $primary;
+        &:hover {
+            background-color: $primary-hover;
+        }
+    }
+    &.wwb__close {
+        background-color: $close;
+        &:hover {
+            background-color: $close-hover;
+        }
+    }
+}

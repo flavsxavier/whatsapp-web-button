@@ -1,0 +1,31 @@
+@mixin tooltip($top, $left, $borderWidth, $borderColor, $transfBefore, $arrowBg, $transfAfter) {
+    &.tooltip {
+        &::before, &::after {
+            position: absolute;
+            top: $top;
+            left: $left;
+            opacity: 0;
+            transition: all ease .3s;
+        }
+        &:hover::before, &:hover::after {
+            opacity: 1;
+        }
+        &::before {
+            content: "";
+            border-width: $borderWidth;
+            border-style: solid;
+            border-color: $borderColor;
+            transform: $transfBefore;
+        }
+        &::after {
+            content: attr(data-tooltip);
+            width: 250px;
+            padding: 10px;
+            background: $arrowBg;
+            font: 14px Arial, sans-serif;
+            color: #eee;
+            border-radius: 8px;
+            transform: $transfAfter;
+        }
+    }
+}

@@ -26,6 +26,12 @@ Created by [me](https://github.com/flavisXavier), with the contribution of techn
 
 ## Changelog
 
+WhatsApp Web Button - v2.1.1 [Important Update]
+- new style for modal and tooltip
+- Bootstrap and its necessary dependencies for it removed
+- improvements in Multiple Numbers
+- improvements in code
+
 WhatsApp Web Button - v2.1.0 [Important Update]
 - security vulnerability fixed
 - new layout based on WordPress AdminUI

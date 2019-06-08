@@ -4,7 +4,7 @@
     /*
     * Plugin name:  WhatsApp Web Button
     * Description:  Adiciona um botão do whatsapp configurável e estilizável para desktop e mobile. Linkado para o WhatsApp Web.
-    * Version:      2.1.0
+    * Version:      2.1.1
     * Author:       Flaviano Xavier
     * Author URI:   https://github.com/flavisXavier
     * License:      GPL2
@@ -13,6 +13,7 @@
     
     define('WWBTN_URL', plugins_url('', __FILE__));
     define('WWBTN_DIR', plugin_dir_path(__FILE__));
+    define('WWBTN_VER', '2.1.1');
 
     $wwbtn = new WWBTN_Engine();
     class WWBTN_Engine {
@@ -66,13 +67,13 @@
         function register__wwbtn_settings() {
             register_setting('wwb__settings', 'wwb__status');
             register_setting('wwb__settings', 'wwb__telefone');
-            register_setting("wwb__settings", "wwb__multi_status");
+            register_setting('wwb__settings', "wwb__multi_status");
             register_setting('wwb__layout', 'wwb__icon');
-            register_setting("wwb__layout", "wwb__file");
-            register_setting("wwb__layout", "wwb__position");
-            register_setting("wwb__layout", "wwb__mbposition");
-            register_setting("wwb__layout", "wwb__tooltip");
-            register_setting("wwb__layout", "wwb__tooltip_pos");
+            register_setting('wwb__layout', 'wwb__icon_size');
+            register_setting('wwb__layout', 'wwb__file');
+            register_setting('wwb__layout', 'wwb__position');
+            register_setting('wwb__layout', 'wwb__mbposition');
+            register_setting('wwb__layout', 'wwb__tooltip');
         }
 
         function save__multi_numbers() {
@@ -118,7 +119,7 @@
         }
 
         function remove_footer_admin () {
-            echo '<span id="footer-thankyou">Desenvolvido por <a href="https://github.com/flavisXavier" target="_blank">Flaviano Xavier</a>.</span>';
+            echo '<span id="footer-thankyou">Versão '. WWBTN_VER .'. Desenvolvido por <a href="https://github.com/flavisXavier" target="_blank">Flaviano Xavier</a>.</span>';
         }
 
         function unmask__wwbtn_tel($numero) {
@@ -130,81 +131,103 @@
             return $tel[3];
         }
 
-        function get__layout($dev, $tel, $pos, $icon, $tool, $multi) {
+        function get__layout($args) {
             $html = '';
-            if ($icon == 'default') {
-                $img = WWBTN_URL . '/images/p60x60.png';
-            } elseif ($icon == 'business') {
-                $img = WWBTN_URL . '/images/b60x60.png';
-            } elseif ($icon == 'custom' && get_option('wwb__file')) {
-                $img = get_option('wwb__file');
+            if ($args['device'] == 'desktop' && get_option('wwb__tooltip') && get_option('wwb__tooltip_pos') !== 'none') {
+                $tooltip = 'tooltip" data-tooltip="'. get_option('wwb__tooltip') .'"';
+            } else {
+                $tooltip = '"';
             }
-            if ($multi == 'deactivated') {
+            if ($args['icon'] !== 'custom') {
+                if ($args['size'] == 'small') {
+                    $file = substr($args['icon'], 0, 1) . '38x38.png';
+                } elseif ($args['size'] == 'default') {
+                    $file = substr($args['icon'], 0, 1) . '47x47.png';
+                } elseif ($args['size'] == 'large') {
+                    $file = substr($args['icon'], 0, 1) . '60x60.png';
+                }
+                $file_path = WWBTN_URL . '/images/' . $file;
+            } elseif ($args['icon'] == 'custom' && get_option('wwb__file')) {
+                $file_path = get_option('wwb__file');
+            }
+            if ($args['status'] == 'deactivated') {
                 $html .= '
-                    <a href="https://wa.me/55'. $tel .'" target="_blank" rel="external noopener noreferrer">
-                        <span class="'. $dev .' '. $pos .'" id="wwb__section">
-                            <img src="'. $img .'" '. $tool .' alt="WhatsApp Web Button">
+                    <a href="https://wa.me/55'. $args['number'] .'" target="_blank" rel="external noopener noreferrer">
+                        <span class="'. $args['device'] .' '. $args['size'] .' '. $args['position'] .' '. $tooltip .' id="wwb__section">
+                            <img src="'. $file_path .'" alt="WhatsApp Web Button">
                         </span>
                     </a>
                 ';
-            } elseif ($multi == 'activated') {
-                $select_options = '';
-                $numbers = get_option('wwb__multi_numbers');
-                foreach ($numbers as $key) {
-                    $select_options .= '<option value="'. $key[1] .'">'. $key[0] .'</option>';
-                }
+            } elseif ($args['status'] == 'activated') {
                 $html .= '
-                    <a target="_blank" data-toggle="modal" data-target="#wwbModal" rel="external noopener noreferrer">
-                        <span class="'. $dev .' '. $pos .'" id="wwb__section">
-                            <img src="'. $img .'" '. $tool .' alt="WhatsApp Web Button">
+                    <label class="wwb__modal_btn" for="wwb__modal_trigger">
+                        <span class="'. $args['device'] .' '. $args['size'] .' '. $args['position'] .' '. $tooltip .' id="wwb__section">
+                            <img src="'. $file_path .'" alt="WhatsApp Web Button">
                         </span>
-                    </a>
-                    <div class="modal fade" id="wwbModal" tabindex="-1" role="dialog" aria-labelledby="wwbModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="wwbModalLabel">WhatsApp Web Button</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <label for="wwbSelect" class="input-group-text">Entre em contato com...</label>
-                                        </div>
-                                        <select id="wwbSelect" class="custom-select">
-                                            <option value="" selected>Escolha...</option>
-                                            '. $select_options .'
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Entrar em Contato</a>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </label>
                 ';
             }
             return $html;
         }
 
-        public function add__wwbtn_section() {
+        function add__wwbtn_section() {
             if (get_option('wwb__status') === 'activated') {
                 $telefone = $this->unmask__wwbtn_tel(get_option('wwb__telefone'));
                 $icon = get_option('wwb__icon');
+                $size = get_option('wwb__icon_size');
                 if (get_option('wwb__position') !== 'none') {
                     $pos = get_option('wwb__position');
-                    if (get_option('wwb__tooltip') && get_option('wwb__tooltip_pos') !== 'none') {
-                        $tooltip = 'data-toggle="tooltip" data-placement="'. get_option('wwb__tooltip_pos') .'" title="'. get_option('wwb__tooltip') .'"';
-                    }
-                    echo $this->get__layout('desktop', $telefone, $pos, $icon, $tooltip, get_option('wwb__multi_status'));
+                    echo $this->get__layout(array(
+                        'device' => 'desktop',
+                        'number' => $telefone,
+                        'position' => $pos,
+                        'icon' => $icon,
+                        'size' => $size,
+                        'status' => get_option('wwb__multi_status')
+                    ));
                 }
                 if (get_option('wwb__mbposition') !== 'none') {
                     $pos = get_option('wwb__mbposition');
-                    echo $this->get__layout('mobile', $telefone, $pos, $icon, '', get_option('wwb__multi_status'));
+                    echo $this->get__layout(array(
+                        'device' => 'mobile',
+                        'number' => $telefone,
+                        'position' => $pos,
+                        'icon' => $icon,
+                        'size' => $size,
+                        'status' => get_option('wwb__multi_status')
+                    ));                
+                }
+                if (get_option('wwb__multi_status') == 'activated') {
+                    $select_options = '';
+                    $numbers = get_option('wwb__multi_numbers');
+                    foreach ($numbers as $key) {
+                        $select_options .= '<option value="'. $key[1] .'">'. $key[0] .'</option>';
+                    }
+                    echo '
+                        <input type="checkbox" id="wwb__modal_trigger">
+                        <div id="wwb__modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1>'. get_option('wwb__tooltip') .'</h1>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <div class="input-group-icon">+55</div>
+                                        <div class="input-group-area">
+                                            <select id="wwbSelect">
+                                                <option value="" selected>Escolha...</option>
+                                                '. $select_options .'
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <label class="modal-close wwb__btn wwb__close" for="wwb__modal_trigger">Fechar</label>
+                                    <a href="#!" target="_self" class="wwb__btn wwb__primary">Enviar</a> 
+                                </div>
+                            </div>
+                        </div>
+                    ';
                 }
             }
         }

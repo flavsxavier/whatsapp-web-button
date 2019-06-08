@@ -7,16 +7,20 @@ jQuery(document).ready(function($) {
     // Icons
     if ($('#wwb__modes').val() == 'custom') {
         $('.wwb__custom_icon').removeClass('hidden');
+        $('.wwb__icon_size').addClass('hidden', '');
     }
     if ($('#wwb__modes').val() == 'default' || $('#wwb__modes').val() == 'business') {
         $(".wwb__custom_icon").addClass('hidden', '');
+        $('.wwb__icon_size').removeClass('hidden');
     }
     $('#wwb__modes').change(function() {
         if ($(this).val() == 'custom') {
             $('.wwb__custom_icon').removeClass('hidden');
+            $('.wwb__icon_size').addClass('hidden', '');
         }
         if ($(this).val() == 'default' || $('#wwb__modes').val() == 'business') {
             $(".wwb__custom_icon").addClass('hidden', '');
+            $('.wwb__icon_size').removeClass('hidden');
         }
     });
     $('.wwb__file_btn').click(function(e) {
@@ -30,7 +34,7 @@ jQuery(document).ready(function($) {
         })
         .on('select', function() {
             var attachment = custom_uploader.state().get('selection').first().toJSON();
-            $('.wwb__file_input').val(attachment.title);
+            $('.wwb__file_input').val(attachment.url);
         })
         .open();
     });

@@ -1,45 +1,49 @@
 // General SCSS for icon
 #wwb__section {
     position: fixed;
-    padding-top: 5px;
-    bottom: 20px;
+    max-width: 60px;
+    max-height: 60px;
+    bottom: $bottom_pos;
     z-index: 99;
     cursor: pointer;
     &.desktop, &.mobile {
+        &.small {
+            width: $small_icon;
+            height: $small_icon;
+        }
+        &.default {
+            width: $default_icon;
+            height: $default_icon;
+        }
+        &.large {
+            width: $large_icon;
+            height: $large_icon;
+        }
         &.left {
-            left: $lr_position;
+            @include tooltip(93%, 590%, 8px 10px 8px 0, transparent rgba(0, 0, 0, .8) transparent transparent, translate(-226px, -170%), rgba(0, 0, 0, .8), translate(-216px, -38px));
+            left: $lr_pos;
         }
         &.right {
-            right: $lr_position; 
+            @include tooltip(93%, -100%, 8px 0 8px 10px, transparent transparent transparent rgba(0, 0, 0, .8), translate(34px, -170%), rgba(0, 0, 0, .8), translate(-216px, -38px));
+            right: $lr_pos; 
         }
     }
     &.mobile {
         display: none;
         &.top {
-            top: $top_position;
+            top: $top_pos;
         }
     }
     img {
-        text-align: center !important;
-        margin: 5px auto;
+        max-width: 100%;
+        height: auto;
     }
-    @media screen and (max-width: 767) {
-        padding-top: 2px;
-        right: 20px;
-        bottom: 0px;
+    @media screen and (max-width: 767px) {
         &.desktop {
             display: none;
         }
         &.mobile {
             display: block;
         }
-    }
-    @media screen and (min-width: 768px) and (max-width: 992px) {
-        padding-top: 2px;
-        bottom: 10px;
-    }
-    @media screen and (min-width: 993px) {
-        padding-top: 5px;
-        bottom: 20px;
     }
 }
