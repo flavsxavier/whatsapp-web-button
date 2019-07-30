@@ -1,12 +1,12 @@
 /*! WhatsApp Web Button by Flaviano Xavier - https://github.com/flavisXavier */
+@import '../variables';
+@import 'mixins';
 @font-face {
     font-family: 'Source Sans Pro';
-    src: url('../fonts/SourceSansPro-Regular.ttf');
+    src: url('#{$fonts-path}/SourceSansPro-Regular.ttf');
     font-weight: normal;
     font-style: normal;
 }
-@import 'variables';
-@import 'mixins';
 @import 'buttons';
 @import 'icon';
 @import 'modal';
